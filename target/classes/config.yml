@@ -1,0 +1,37 @@
+# Cuboids
+#FREEHC.PL (C) 2021
+
+database:
+  host: localhost
+  port: 3306
+  user: root
+  password: password
+  database: minecraft
+
+Debug: false
+
+CuboidWorldName: world
+
+BlockedCommandsOnCuboid:
+  - sethome
+
+ProtectPlayerTime: 60 #in minutes
+
+DefaultCuboidSize: 50
+
+CuboidLevels: #size:price
+  60: 2500
+  70: 50000
+  80: 250000
+  90: 500000
+  100: 1000000
+
+PrefixedText: "&aFreeHC.pl &c>> &r"
+
+PrefixedBulletText: "&c>> &r"
+
+CuboidCrafting: [COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE, IRON_BLOCK, COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE]
+
+CuboidBlock: SPONGE
+
+CuboidBlockName: "&aCuboid"
