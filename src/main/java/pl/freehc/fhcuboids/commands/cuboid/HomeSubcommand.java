@@ -14,7 +14,7 @@ public class HomeSubcommand {
         Player p = (Player) sender;
             //Czy ma cuboid lub jest dodany do czyjegos
             if (!IsPlayerHasCuboid(p) && GetCuboidsWherePlayerIsAdded(p).size() == 0) {
-                p.sendMessage(GetPrefixedText("Nie posiadasz cuboida!"));
+                p.sendMessage(ColoredText("&6&lFree&b&lHC &cNie posiadasz cuboida!"));
                 return true;
             }
 
@@ -25,7 +25,7 @@ public class HomeSubcommand {
                         .filter(x -> x.getOwnerNickname().equalsIgnoreCase(args[1]))
                         .findFirst().orElse(null);
                 if(cuboid == null || !HasPermissionToCuboid(cuboid, p)){
-                    p.sendMessage(GetPrefixedText("Nie jesteś dodany do cuboida tego gracza!"));
+                    p.sendMessage(ColoredText("&6&lFree&b&lHC  &cNie jesteś dodany do cuboida tego gracza!"));
                     return true;
                 }
                 return TeleportPlayerToCuboid(p, cuboid);
@@ -46,7 +46,7 @@ public class HomeSubcommand {
                         .findFirst().orElse(null);
                 return TeleportPlayerToCuboid(p, cuboid);
             } else if (GetCuboidsWherePlayerIsAdded(p).size() > 1) {
-                p.sendMessage(GetPrefixedText("Podaj nick właściciela cuboida!"));
+                p.sendMessage(ColoredText("&6&lFree&b&lHC  &cPodaj nick właściciela cuboida!"));
                 return true;
             }
 
@@ -56,12 +56,12 @@ public class HomeSubcommand {
 
     private static boolean TeleportPlayerToCuboid(Player p, CuboidModel cuboid){
         if(!p.getWorld().getName().equals("world")){
-            p.sendMessage(GetPrefixedText("Jesteś w złym świecie!"));
+            p.sendMessage(ColoredText("&6&lFree&b&lHC  &cJesteś w złym świecie!"));
             return true;
         }
-        Location homeLocation = new Location(p.getWorld(), cuboid.getjajX(), cuboid.getjajY(), cuboid.getjajZ());
+        Location homeLocation = new Location(p.getWorld(), cuboid.getjajX(), cuboid.getjajY(), cuboid.getjajZ(), cuboid.getjajYaw(), cuboid.getjajPitch());
         p.teleport(homeLocation);
-        p.sendMessage(GetPrefixedText("Teleportuje..."));
+        p.sendMessage(ColoredText("&6&lFree&b&lHC  &7Teleportuję..."));
         return true;
     }
 }

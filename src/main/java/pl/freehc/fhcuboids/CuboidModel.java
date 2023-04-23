@@ -20,17 +20,30 @@ public class CuboidModel {
     private double jajX;
     private double jajZ;
     private double jajY;
+    private float jajYaw = 0.0f;
+    private float jajPitch = 0.0f;
+
+    @Column(columnDefinition="tinyint(1) default 0")
+    private boolean isWarpPurchased = false;
+    private double warpX = 0;
+    private double warpZ = 0;
+    private double warpY = 0;
+    private float warpYaw = 0.0f;
+    private float warpPitch = 0.0f;
     @Type(type = "uuid-char")
     private UUID OwnerUUID;
     private String OwnerNickname;
     private long ExpireTime;
     private long CreatedTime;
     private int Size;
+    @Column(columnDefinition="double precision default '0'")
+    private double PricePaid;
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Cuboids_friends")
     @OrderColumn(name = "pos")
     @Type(type="uuid-char")
     private List<UUID> FriendsUUID;
+
     // Getter
     public double getID() {
         return ID;
@@ -64,6 +77,37 @@ public class CuboidModel {
         return jajY;
     }
 
+    public float getjajYaw() {
+        return jajYaw;
+    }
+
+    public float getjajPitch() {
+        return jajPitch;
+    }
+
+    public boolean getisWarpPurchased() {
+        return isWarpPurchased;
+    }
+    public double getwarpX() {
+        return warpX;
+    }
+
+    public double getwarpZ() {
+        return warpZ;
+    }
+
+    public double getwarpY() {
+        return warpY;
+    }
+
+    public float getwarpYaw() {
+        return warpYaw;
+    }
+
+    public float getwarpPitch() {
+        return warpPitch;
+    }
+
     public long getExpireTime() {
         return ExpireTime;
     }
@@ -83,8 +127,13 @@ public class CuboidModel {
         return FriendsUUID;
     }
 
+
     public int getSize() {
         return Size;
+    }
+
+    public double getPricePaid() {
+        return PricePaid;
     }
 
 
@@ -119,6 +168,33 @@ public class CuboidModel {
     public void setjajY(double newjajY){
         jajY = newjajY;
     }
+    public void setjajYaw(float newjajYaw){
+        jajYaw = newjajYaw;
+    }
+    public void setjajPitch(float newjajPitch){
+        jajPitch = newjajPitch;
+    }
+
+    public void setisWarpPurchased(boolean newisWarpPurchased){
+        isWarpPurchased = newisWarpPurchased;
+    }
+    public void setwarpX(double newwarpX){
+        warpX = newwarpX;
+    }
+
+    public void setwarpZ(double newwarpZ){
+        warpZ = newwarpZ;
+    }
+
+    public void setwarpY(double newwarpY){
+        warpY = newwarpY;
+    }
+    public void setwarpYaw(float newwarpYaw){
+        warpYaw = newwarpYaw;
+    }
+    public void setwarpPitch(float newwarpPitch){
+        warpPitch = newwarpPitch;
+    }
 
     public void setOwnerUUID(UUID newOwnerUUID) {
         OwnerUUID = newOwnerUUID;
@@ -142,5 +218,10 @@ public class CuboidModel {
 
     public void setSize(int newSize){
         Size = newSize;
+    }
+
+
+    public void setPricePaid(double newPricePaid){
+        PricePaid = newPricePaid;
     }
 }

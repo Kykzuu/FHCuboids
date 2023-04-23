@@ -9,7 +9,7 @@ import pl.freehc.fhcuboids.App;
 public class CraftCuboidInventory {
 
 
-    public static Inventory inv(Material[] materials, int size, double price) {
+    public static Inventory inv(Material[] materials, int size, double price, Material item) {
         Inventory in = Bukkit.createInventory(null, 27, "§aCrafting cuboida");
         in.setItem(2,  new ItemStack(materials[0]));
         in.setItem(3,  new ItemStack(materials[1]));
@@ -20,7 +20,7 @@ public class CraftCuboidInventory {
         in.setItem(20, new ItemStack(materials[6]));
         in.setItem(21, new ItemStack(materials[7]));
         in.setItem(22, new ItemStack(materials[8]));
-        in.setItem(15, App.CuboidItem(size, price));
+        in.setItem(15, App.CuboidItem(size, price, item));
         return in;
     }
 }

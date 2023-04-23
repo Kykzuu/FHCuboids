@@ -9,32 +9,26 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
-import pl.freehc.fhcuboids.App;
-import pl.freehc.fhcuboids.CuboidHelper;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.*;
 
 import java.sql.SQLException;
 import java.util.List;
 
-import static pl.freehc.fhcuboids.CuboidHelper.CreateCuboid;
-import static pl.freehc.fhcuboids.CuboidHelper.GetPrefixedText;
+import static pl.freehc.fhcuboids.CuboidHelper.*;
 
 public class PlaceEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) throws SQLException {
-        createCuboidOnPlace(e, 40, 0); //lvl 1
-        createCuboidOnPlace(e, 50, 25000); //lvl 2
-        createCuboidOnPlace(e, 60, 75000); //lvl 3
-        createCuboidOnPlace(e, 70, 250000); //lvl 4
-        createCuboidOnPlace(e, 80, 500000); //lvl 5
-        createCuboidOnPlace(e, 90, 1000000); //lvl 6
-        createCuboidOnPlace(e, 100, 5000000); //lvl 7
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        for (CuboidConfigurationModel cuboidConfigurationModel : pluginConfigurationModel.getCuboidsConfig()) {
+            createCuboidOnPlace(e, cuboidConfigurationModel.getSize(), cuboidConfigurationModel.getPrice(), Material.getMaterial(cuboidConfigurationModel.getItem()));
+        }
     }
 
-    public void createCuboidOnPlace(BlockPlaceEvent e, int size, double price) throws SQLException {
-        if (e.getPlayer().getItemInHand().getType().equals(App.CuboidItem(size, price).getType())) {
-            if (!e.getPlayer().getItemInHand().getItemMeta().equals(App.CuboidItem(size, price).getItemMeta()))
+    public void createCuboidOnPlace(BlockPlaceEvent e, int size, double price, Material item) throws SQLException {
+        if (e.getPlayer().getItemInHand().getType().equals(App.CuboidItem(size, price, item).getType())) {
+            if (!e.getPlayer().getItemInHand().getItemMeta().equals(App.CuboidItem(size, price, item).getItemMeta()))
                 return;
             Location placedBlockLocation = e.getBlockPlaced().getLocation();
             if (!placedBlockLocation.getWorld().getName().equalsIgnoreCase("world")) {
@@ -47,7 +41,7 @@ public class PlaceEvent implements Listener {
             for (CuboidModel cuboid : cuboids) {
                 if(e.getPlayer().getUniqueId().equals(cuboid.getOwnerUUID())){
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(String.valueOf("§cLimit posiadanych cuboidów zostal przekroczony!"));
+                    e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &cLimit posiadanych cuboidów zostal przekroczony!"));
                     return;
                 }
             }
@@ -55,7 +49,7 @@ public class PlaceEvent implements Listener {
             Economy economy = App.getEconomy();
             OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(e.getPlayer().getUniqueId());
             if(economy.getBalance(offlinePlayer) < price){
-                e.getPlayer().sendMessage(GetPrefixedText("Nie masz tylu pieniędzy!"));
+                e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &cNie masz tylu pieniędzy!"));
                 e.setCancelled(true);
                 return;
             }
@@ -63,27 +57,27 @@ public class PlaceEvent implements Listener {
             for (CuboidModel cuboid : cuboids) {
                 if (placedBlockLocation.getX() >= cuboid.getMiX() && placedBlockLocation.getX() <= cuboid.getMaX() && placedBlockLocation.getZ() >= cuboid.getMiZ() && placedBlockLocation.getZ() <= cuboid.getMaZ()) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(String.valueOf(String.valueOf("§cTen teren jest zajety!")));
+                    e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &cTen teren jest zajęty!"));
                     return;
                 }
                 if (placedBlockLocation.getX() + cuboidSize >= cuboid.getMiX() && placedBlockLocation.getX() + cuboidSize <= cuboid.getMaX() && placedBlockLocation.getZ() + cuboidSize >= cuboid.getMiZ() && placedBlockLocation.getZ() + cuboidSize <= cuboid.getMaZ()) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(String.valueOf("§cW poblizu jest juz inna dzialka! Poszukaj innego miejsca!"));
+                    e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &cW pobliżu jest już działka! Poszukaj innego miejsca!"));
                     return;
                 }
                 if (placedBlockLocation.getX() - cuboidSize >= cuboid.getMiX() && placedBlockLocation.getX() - cuboidSize <= cuboid.getMaX() && placedBlockLocation.getZ() - cuboidSize >= cuboid.getMiZ() && placedBlockLocation.getZ() - cuboidSize <= cuboid.getMaZ()) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(String.valueOf("§cW poblizu jest juz inna dzialka! Poszukaj innego miejsca!"));
+                    e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &cW pobliżu jest już działka! Poszukaj innego miejsca!"));
                     return;
                 }
                 if (placedBlockLocation.getX() + cuboidSize >= cuboid.getMiX() && placedBlockLocation.getX() + cuboidSize <= cuboid.getMaX() && placedBlockLocation.getZ() - cuboidSize >= cuboid.getMiZ() && placedBlockLocation.getZ() - cuboidSize <= cuboid.getMaZ()) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(String.valueOf("§cW poblizu jest juz inna dzialka! Poszukaj innego miejsca!"));
+                    e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &cW pobliżu jest już działka! Poszukaj innego miejsca!"));
                     return;
                 }
                 if (placedBlockLocation.getX() - cuboidSize >= cuboid.getMiX() && placedBlockLocation.getX() - cuboidSize <= cuboid.getMaX() && placedBlockLocation.getZ() + cuboidSize >= cuboid.getMiZ() && placedBlockLocation.getZ() + cuboidSize <= cuboid.getMaZ()) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage(String.valueOf("§cW poblizu jest juz inna dzialka! Poszukaj innego miejsca!"));
+                    e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &cW pobliżu jest już działka! Poszukaj innego miejsca!"));
                     return;
                 }
             }
@@ -99,6 +93,9 @@ public class PlaceEvent implements Listener {
             cuboid.setjajY(placedBlockLocation.getY());
             cuboid.setjajZ(placedBlockLocation.getZ());
 
+            cuboid.setjajPitch(e.getPlayer().getLocation().getPitch());
+            cuboid.setjajYaw(e.getPlayer().getLocation().getYaw());
+
             cuboid.setOwnerNickname(e.getPlayer().getName());
             cuboid.setOwnerUUID(e.getPlayer().getUniqueId());
 
@@ -106,10 +103,11 @@ public class PlaceEvent implements Listener {
 
             cuboid.setCreatedTime(System.currentTimeMillis()/1000);
             cuboid.setExpireTime((System.currentTimeMillis()+(7*86400000))/1000);
+            cuboid.setPricePaid(price);
             economy.withdrawPlayer(offlinePlayer, price);
             CreateCuboid(cuboid);
             Bukkit.getServer().getWorld("world").getBlockAt(placedBlockLocation).setType(Material.AIR);
-            e.getPlayer().sendMessage(String.valueOf("§aZabezpieczyles teren §c" + (cuboidSize * 2) + "§ax§c" + (cuboidSize * 2) + "§a!"));
+            e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &7Zabezpieczyłeś teren &a" + (cuboidSize * 2) + "x&a" + (cuboidSize * 2) + "&7!"));
         }
     }
 }

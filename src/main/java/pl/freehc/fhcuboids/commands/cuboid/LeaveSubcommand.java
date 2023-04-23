@@ -7,20 +7,20 @@ import org.bukkit.entity.Player;
 import pl.freehc.fhcuboids.CuboidHelper;
 import pl.freehc.fhcuboids.CuboidModel;
 
-import static pl.freehc.fhcuboids.CuboidHelper.GetPrefixedText;
+import static pl.freehc.fhcuboids.CuboidHelper.ColoredText;
 
 public class LeaveSubcommand {
     public static boolean LeaveSubcommandMain(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
         //Czy jest dodany do jakiegos cuboida
         if(CuboidHelper.GetCuboidsWherePlayerIsAdded(p).size() == 0){
-            p.sendMessage(GetPrefixedText("Nie jesteś dodany do żadnego cuboida!"));
+            p.sendMessage(ColoredText("&6&lFree&b&lHC &cNie posiadasz cuboida!"));
             return true;
         }
 
         //Czy gracz wpisał nick osoby, której cuboid chce opuscic
         if (args.length < 2) {
-            p.sendMessage(GetPrefixedText("Poprawne użycie: /cuboid leave [gracz]"));
+            p.sendMessage(ColoredText("&6&lFree&b&lHC &7Poprawne użycie: &a/cuboid leave [gracz]"));
             return true;
         }
 
@@ -29,11 +29,11 @@ public class LeaveSubcommand {
                 .filter(x -> x.getOwnerNickname().equalsIgnoreCase(args[1])).findFirst().orElse(null);
         if(cuboid != null){
             CuboidHelper.DeletePlayerFromCuboid(cuboid, p);
-            p.sendMessage(GetPrefixedText("Opuściłeś cuboid gracza "+ Bukkit.getOfflinePlayer(cuboid.getOwnerUUID()).getName()));
+            p.sendMessage(ColoredText("&6&lFree&b&lHC &7Opuściłeś cuboid gracza &a "+ Bukkit.getOfflinePlayer(cuboid.getOwnerUUID()).getName()));
             return true;
         }
 
-        p.sendMessage(GetPrefixedText("Nie jesteś dodany do tego cuboida!"));
+        p.sendMessage(ColoredText("&6&lFree&b&lHC &cNie jesteś dodany do tego cuboida!"));
         return true;
 
     }

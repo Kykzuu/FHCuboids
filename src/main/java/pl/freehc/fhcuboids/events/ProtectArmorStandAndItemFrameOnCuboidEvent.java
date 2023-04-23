@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import pl.freehc.fhcuboids.CuboidHelper;
 import pl.freehc.fhcuboids.CuboidModel;
@@ -56,6 +57,18 @@ public class ProtectArmorStandAndItemFrameOnCuboidEvent implements Listener {
 
                 e.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void PlayerArmorStandManipulate(PlayerArmorStandManipulateEvent e) {
+        Player player = (Player) e.getPlayer();
+        if(CuboidHelper.IsOnAnyCuboidArea(e.getPlayer().getLocation())){
+            CuboidModel cuboid = CuboidHelper.GetCuboid(player.getLocation());
+            if(CuboidHelper.HasPermissionToCuboid(cuboid, player)) {
+                return;
+            }
+            e.setCancelled(true);
         }
     }
 

@@ -5,6 +5,7 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,12 +15,15 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import pl.freehc.fhcuboids.App;
+import pl.freehc.fhcuboids.CuboidConfigurationModel;
+import pl.freehc.fhcuboids.PluginConfiguration;
+import pl.freehc.fhcuboids.PluginConfigurationModel;
 
 import java.util.List;
 
 public class CraftingSubcommand implements Listener {
 
-    private static Inventory inv = Bukkit.createInventory(null, 9, "§cKliknij by poznać crafting");;
+    private static Inventory inv = Bukkit.createInventory(null, 9, "§cKliknij aby poznać crafting");;
 
 
     public static boolean CraftingSubcommandMain(CommandSender sender, Command cmd, String label, String[] args) {
@@ -29,13 +33,11 @@ public class CraftingSubcommand implements Listener {
     }
 
     public static void initializeItems() {
-        inv.addItem(createGuiItem(App.CuboidItem(40, 0).getType(), App.CuboidItem(40, 0).getItemMeta().getDisplayName(), App.CuboidItem(40, 0).getItemMeta().getLore()));
-        inv.addItem(createGuiItem(App.CuboidItem(50, 25000).getType(), App.CuboidItem(50, 25000).getItemMeta().getDisplayName(), App.CuboidItem(50, 25000).getItemMeta().getLore()));
-        inv.addItem(createGuiItem(App.CuboidItem(60, 75000).getType(), App.CuboidItem(60, 75000).getItemMeta().getDisplayName(), App.CuboidItem(60, 75000).getItemMeta().getLore()));
-        inv.addItem(createGuiItem(App.CuboidItem(70, 250000).getType(), App.CuboidItem(70, 250000).getItemMeta().getDisplayName(), App.CuboidItem(70, 250000).getItemMeta().getLore()));
-        inv.addItem(createGuiItem(App.CuboidItem(80, 500000).getType(), App.CuboidItem(80, 500000).getItemMeta().getDisplayName(), App.CuboidItem(80, 500000).getItemMeta().getLore()));
-        inv.addItem(createGuiItem(App.CuboidItem(90, 1000000).getType(), App.CuboidItem(90, 1000000).getItemMeta().getDisplayName(), App.CuboidItem(90, 1000000).getItemMeta().getLore()));
-        inv.addItem(createGuiItem(App.CuboidItem(100, 5000000).getType(), App.CuboidItem(100, 5000000).getItemMeta().getDisplayName(), App.CuboidItem(100, 5000000).getItemMeta().getLore()));
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        for(CuboidConfigurationModel cuboidConfigurationModel : pluginConfigurationModel.getCuboidsConfig()){
+            ItemStack cuboidItem = App.CuboidItem(cuboidConfigurationModel.getSize(), cuboidConfigurationModel.getPrice(), Material.getMaterial(cuboidConfigurationModel.getItem()));
+            inv.addItem(createGuiItem(cuboidItem.getType(), cuboidItem.getItemMeta().getDisplayName(), cuboidItem.getItemMeta().getLore()));
+        }
     }
 
     protected static ItemStack createGuiItem(final Material material, final String name, final List<String> lore) {
@@ -72,71 +74,20 @@ public class CraftingSubcommand implements Listener {
         final Player p = (Player) e.getWhoClicked();
 
         // Using slots click is a best option for your inventory click's
-        Material[] lvl1 = new Material[]{
-                Material.COBBLESTONE, Material.COBBLESTONE, Material.COBBLESTONE, Material.COBBLESTONE,
-                Material.DIRT,
-                Material.COBBLESTONE, Material.COBBLESTONE, Material.COBBLESTONE, Material.COBBLESTONE
-        };
 
-        Material[] lvl2 = new Material[]{
-                Material.COBBLESTONE,Material.COBBLESTONE, Material.COBBLESTONE,
-                Material.COBBLESTONE, Material.IRON_BLOCK,Material.COBBLESTONE,
-                Material.COBBLESTONE,Material.COBBLESTONE,Material.COBBLESTONE
-        };
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        List<CuboidConfigurationModel> cuboidConfig = pluginConfigurationModel.getCuboidsConfig();
 
-        Material[] lvl3 = new Material[]{
-                Material.IRON_BLOCK,Material.IRON_BLOCK,Material.IRON_BLOCK,
-                Material.IRON_BLOCK,Material.DIAMOND_BLOCK,Material.IRON_BLOCK,
-                Material.IRON_BLOCK,Material.IRON_BLOCK,Material.IRON_BLOCK
-        };
-
-        Material[] lvl4 = new Material[]{
-                Material.IRON_BLOCK,Material.IRON_BLOCK,Material.IRON_BLOCK,
-                Material.IRON_BLOCK,Material.EMERALD_BLOCK,Material.IRON_BLOCK,
-                Material.IRON_BLOCK,Material.IRON_BLOCK,Material.IRON_BLOCK
-        };
-
-        Material[] lvl5 = new Material[]{
-                Material.DIAMOND_BLOCK,Material.DIAMOND_BLOCK,Material.DIAMOND_BLOCK,
-                Material.DIAMOND_BLOCK, Material.NETHERITE_BLOCK,Material.DIAMOND_BLOCK,
-                Material.DIAMOND_BLOCK,Material.DIAMOND_BLOCK, Material.DIAMOND_BLOCK
-        };
-
-        Material[] lvl6 = new Material[]{
-                Material.DIAMOND_BLOCK,Material.DIAMOND_BLOCK,Material.DIAMOND_BLOCK,
-                Material.DIAMOND_BLOCK,Material.BEACON,Material.DIAMOND_BLOCK,
-                Material.DIAMOND_BLOCK,Material.DIAMOND_BLOCK,Material.DIAMOND_BLOCK        };
-
-        Material[] lvl7 = new Material[]{
-                Material.BEACON,Material.BEACON,Material.BEACON,
-                Material.BEACON,Material.BEACON,Material.BEACON,
-                Material.BEACON,Material.BEACON,Material.BEACON  };
-        if(e.getRawSlot() == 0){
-            p.openInventory(CraftCuboidInventory.inv(lvl1, 40, 0));
-        }
-
-        if(e.getRawSlot() == 1){
-            p.openInventory(CraftCuboidInventory.inv(lvl2, 50, 25000));
-        }
-
-        if(e.getRawSlot() == 2){
-            p.openInventory(CraftCuboidInventory.inv(lvl3, 60, 75000));
-        }
-
-        if(e.getRawSlot() == 3){
-            p.openInventory(CraftCuboidInventory.inv(lvl4, 70, 250000));
-        }
-
-        if(e.getRawSlot() == 4){
-            p.openInventory(CraftCuboidInventory.inv(lvl5, 80, 500000));
-        }
-
-        if(e.getRawSlot() == 5){
-            p.openInventory(CraftCuboidInventory.inv(lvl6, 90, 1000000));
-        }
-
-        if(e.getRawSlot() == 6){
-            p.openInventory(CraftCuboidInventory.inv(lvl7, 100, 5000000));
+        for (int i = 0; i < cuboidConfig.size(); i++) {
+            CuboidConfigurationModel cuboidConfigurationModel = cuboidConfig.get(i);
+            List<String> crafting = cuboidConfigurationModel.getCrafting();
+            if (e.getRawSlot() == i) {
+                Material[] material = new Material[]{
+                        Material.getMaterial(crafting.get(0)),Material.getMaterial(crafting.get(1)),Material.getMaterial(crafting.get(2)),
+                        Material.getMaterial(crafting.get(3)),Material.getMaterial(crafting.get(4)),Material.getMaterial(crafting.get(5)),
+                        Material.getMaterial(crafting.get(6)),Material.getMaterial(crafting.get(7)),Material.getMaterial(crafting.get(8))  };
+                p.openInventory(CraftCuboidInventory.inv(material, cuboidConfigurationModel.getSize(), cuboidConfigurationModel.getPrice(), Material.getMaterial(cuboidConfigurationModel.getItem())));
+            }
         }
     }
 

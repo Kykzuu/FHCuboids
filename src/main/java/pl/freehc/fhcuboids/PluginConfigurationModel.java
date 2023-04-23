@@ -1,14 +1,24 @@
 package pl.freehc.fhcuboids;
 
+import java.util.List;
+
 public class PluginConfigurationModel {
     private String databaseHost;
     private int databasePort;
     private String databaseUser;
     private String databasePassword;
     private String databaseDatabase;
+    private List<String> allowedCommandsOnCuboid;
     private boolean isDebug;
+    private List<CuboidConfigurationModel> cuboidsConfig;
 
 
+    public List<String> getAllowedCommandsOnCuboid() {
+        return allowedCommandsOnCuboid;
+    }
+    public void setAllowedCommandsOnCuboid(List<String> allowedCommandsOnCuboid) {
+        this.allowedCommandsOnCuboid = allowedCommandsOnCuboid;
+    }
     public String getDatabaseHost() {
         return databaseHost;
     }
@@ -51,5 +61,11 @@ public class PluginConfigurationModel {
         this.isDebug = isDebug;
     }
 
-
+    public List<CuboidConfigurationModel> getCuboidsConfig() {
+        return cuboidsConfig;
+    }
+    public void setCuboidsConfig(List<CuboidConfigurationModel> cuboidsConfig) {
+        this.cuboidsConfig = cuboidsConfig;
+    }
 }
+

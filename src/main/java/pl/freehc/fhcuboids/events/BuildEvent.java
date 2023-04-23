@@ -17,7 +17,7 @@ public class BuildEvent implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void OnBuild(PlayerInteractEvent e) throws SQLException {
 
-        if(e.getPlayer().hasPermission("myminecraftcuboids.admin") || e.getPlayer().isOp()){
+        if(e.getPlayer().hasPermission("fhcuboids.admin") || e.getPlayer().isOp()){
             return;
         }
 

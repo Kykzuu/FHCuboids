@@ -15,12 +15,12 @@ public class HibernateFactory {
         configuration.setProperty("hibernate.connection.username", pluginConfigurationModel.getDatabaseUser());
         configuration.setProperty("hibernate.connection.password", pluginConfigurationModel.getDatabasePassword());
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
-
-        configuration.setProperty("hibernate.connection.provider_class", "org.hibernate.hikaricp.internal.HikariCPConnectionProvider");
-        configuration.setProperty("hibernate.hikari.connectionTimeout", "20000");
-        configuration.setProperty("hibernate.hikari.minimumIdle", "10");
-        configuration.setProperty("hibernate.hikari.maximumPoolSize", "20");
-        configuration.setProperty("hibernate.hikari.idleTimeout", "300000");
+        configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+        //configuration.setProperty("hibernate.connection.provider_class", "org.hibernate.hikaricp.internal.HikariCPConnectionProvider");
+        //configuration.setProperty("hibernate.hikari.connectionTimeout", "20000");
+        //configuration.setProperty("hibernate.hikari.minimumIdle", "10");
+        //configuration.setProperty("hibernate.hikari.maximumPoolSize", "20");
+        //configuration.setProperty("hibernate.hikari.idleTimeout", "300000");
 
         if(pluginConfigurationModel.getIsDebug()){
             configuration.setProperty("hibernate.show_sql", "true");
