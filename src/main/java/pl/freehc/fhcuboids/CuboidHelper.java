@@ -167,7 +167,8 @@ public class CuboidHelper {
 
 
     public static String ColoredText(String text) {
-        return text.replace('&', '§');
+        return text.replace("&", "§");
+
     }
 
 }

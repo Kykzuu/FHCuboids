@@ -39,6 +39,11 @@
     <remote-repository>
       <option name="id" value="dynmap-repo" />
       <option name="name" value="dynmap-repo" />
+      <option name="url" value="https://dynmap.us/builds/dynmap/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="dynmap-repo" />
+      <option name="name" value="dynmap-repo" />
       <option name="url" value="http://repo.mikeprimm.com/" />
     </remote-repository>
     <remote-repository>
@@ -47,9 +52,9 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="dynmap-repo" />
-      <option name="name" value="dynmap-repo" />
-      <option name="url" value="https://dynmap.us/builds/dynmap/" />
+      <option name="id" value="MavenRepo" />
+      <option name="name" value="MavenRepo" />
+      <option name="url" value="https://repo.maven.apache.org/maven2/" />
     </remote-repository>
   </component>
 </project>

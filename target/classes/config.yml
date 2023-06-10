@@ -13,7 +13,7 @@ Debug: false
 CuboidWorldName: world
 
 #Allowed commands on cuboid for non-added players
-AllowedCommandsOnCuboid: ["/home", "/spawn", "/warp", "/tpa", "/msg", "/r", "/cuboid"]
+AllowedCommandsOnCuboid: ["/home", "/spawn", "/warp", "/tpa", "/msg", "/r", "/reply", "/cuboid"]
 
 CuboidLevels: [
   {

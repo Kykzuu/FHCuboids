@@ -14,7 +14,6 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
-import org.dynmap.markers.MarkerSet;
 import pl.freehc.fhcuboids.commands.cuboid.CraftingSubcommand;
 import pl.freehc.fhcuboids.commands.cuboid.CuboidCommand;
 import pl.freehc.fhcuboids.events.*;
