@@ -26,6 +26,14 @@ jobs:
           overwrite-settings: true
           job-status: 'success'
 
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            
       - name: Build with Gradle
         run: ./gradlew shadowJar --no-daemon
 
@@ -34,3 +42,4 @@ jobs:
         with:
           name: shadowJar
           path: build/libs/*.jar
+
