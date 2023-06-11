@@ -2,7 +2,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -16,9 +16,18 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'adopt'
+          java-package: 'jdk'
+          architecture: 'x64'
+          check-latest: false
+          server-id: 'github'
+          server-username: ${{ github.actor }}
+          server-password: ${{ secrets.GITHUB_TOKEN }}
+          overwrite-settings: true
+          job-status: 'success'
 
       - name: Build with Gradle
-        run: ./gradlew shadowJar
+        run: ./gradlew shadowJar --no-daemon
 
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
