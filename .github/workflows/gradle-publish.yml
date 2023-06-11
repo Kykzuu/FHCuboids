@@ -2,7 +2,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
