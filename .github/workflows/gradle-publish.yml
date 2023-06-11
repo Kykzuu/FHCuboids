@@ -2,7 +2,7 @@ name: Build and Publish Artifact
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -18,7 +18,7 @@ jobs:
           java-version: '17'
 
       - name: Build with Gradle
-        run: ./gradlew shadowJar
+        run: ./gradlew shadowJar --no-daemon
 
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
