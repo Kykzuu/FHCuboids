@@ -8,8 +8,6 @@
 *.iml
 out
 gen
-gradlew
-gradlew.bat
 ### Gradle template
 .gradle
 **/build/
