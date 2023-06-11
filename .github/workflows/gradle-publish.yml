@@ -26,32 +26,20 @@ jobs:
           overwrite-settings: true
           job-status: 'success'
 
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+            
       - name: Build with Gradle
         run: ./gradlew shadowJar --no-daemon
-      - name: version
-        run: echo "::set-output name=version::$(./gradlew -q printVersion)"
-        id: version
+
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
           name: shadowJar
           path: build/libs/*.jar
-      - name: release
-        uses: actions/create-release@v1
-        id: create_release
-        with:
-          draft: false
-          prerelease: false
-          release_name: ${{ steps.version.outputs.version }}
-          tag_name: ${{ github.ref }}
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-      - name: upload artifact
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./build/libs/FHCuboids-all.jar
-          asset_name: FHCuboids.jar
-          asset_content_type: application/jar
+
