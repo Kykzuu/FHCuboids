@@ -1,6 +1,6 @@
 main: pl.freehc.fhcuboids.App
 name: FHCuboids
-version: ${plugin.version}
+version: 3.0
 softdepend: [Dynmap]
 api-version: 1.19
 depend: [Vault]
