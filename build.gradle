@@ -48,3 +48,9 @@ shadowJar {
 
     mergeServiceFiles()
 }
+
+task printVersion {
+    doLast {
+        println "3.0.0"
+    }
+}
