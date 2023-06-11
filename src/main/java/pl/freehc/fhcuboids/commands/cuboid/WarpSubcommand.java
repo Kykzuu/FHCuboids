@@ -21,7 +21,7 @@ public class WarpSubcommand {
             //Teleport do czyjegos warpa
             if (args.length == 2) {
                 CuboidModel cuboid = GetAllCuboids().stream()
-                        .filter(x -> x.getisWarpPurchased())
+                        .filter(x -> x.isWarpPurchased())
                         .filter(x -> x.getOwnerNickname().equalsIgnoreCase(args[1]))
                         .findFirst().orElse(null);
                 if(cuboid != null){
@@ -37,7 +37,7 @@ public class WarpSubcommand {
             p.sendMessage(ColoredText("&6&lFree&b&lHC  &cJesteś w złym świecie!"));
             return true;
         }
-        Location homeLocation = new Location(p.getWorld(), cuboid.getwarpX(), cuboid.getwarpY(), cuboid.getwarpZ(), cuboid.getwarpYaw(), cuboid.getwarpPitch());
+        Location homeLocation = new Location(p.getWorld(), cuboid.getWarpX(), cuboid.getWarpY(), cuboid.getWarpZ(), cuboid.getWarpYaw(), cuboid.getWarpPitch());
         p.teleport(homeLocation);
         p.sendMessage(ColoredText("&6&lFree&b&lHC  &7Teleportuję..."));
         return true;

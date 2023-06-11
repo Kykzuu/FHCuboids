@@ -17,7 +17,7 @@ public class WarpsSubcommand {
 
 
             List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids().stream()
-                    .filter(CuboidModel::getisWarpPurchased).collect(Collectors.toList());
+                    .filter(CuboidModel::isWarpPurchased).collect(Collectors.toList());
         String listString = "";
         for (CuboidModel s : cuboids)
         {

@@ -29,7 +29,7 @@ public class SetwarpSubcommand {
         }
 
         CuboidModel cuboidPlayer = CuboidHelper.GetCuboid(p);
-        boolean IsWarpPurchased = cuboidPlayer.getisWarpPurchased();
+        boolean IsWarpPurchased = cuboidPlayer.isWarpPurchased();
 
         //czy ma kupionego warpa
         if(IsWarpPurchased){

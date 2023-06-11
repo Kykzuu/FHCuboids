@@ -89,12 +89,12 @@ public class PlaceEvent implements Listener {
             cuboid.setMaZ(placedBlockLocation.getZ() + cuboidSize);
             cuboid.setMiZ(placedBlockLocation.getZ() - cuboidSize);
 
-            cuboid.setjajX(placedBlockLocation.getX());
-            cuboid.setjajY(placedBlockLocation.getY());
-            cuboid.setjajZ(placedBlockLocation.getZ());
+            cuboid.setJajX(placedBlockLocation.getX());
+            cuboid.setJajY(placedBlockLocation.getY());
+            cuboid.setJajZ(placedBlockLocation.getZ());
 
-            cuboid.setjajPitch(e.getPlayer().getLocation().getPitch());
-            cuboid.setjajYaw(e.getPlayer().getLocation().getYaw());
+            cuboid.setJajPitch(e.getPlayer().getLocation().getPitch());
+            cuboid.setJajYaw(e.getPlayer().getLocation().getYaw());
 
             cuboid.setOwnerNickname(e.getPlayer().getName());
             cuboid.setOwnerUUID(e.getPlayer().getUniqueId());

@@ -106,11 +106,11 @@ public class CuboidHelper {
     }
 
     public static boolean UpdateHomeLocation(CuboidModel cuboidModel, Location location){
-        cuboidModel.setjajX(location.getX());
-        cuboidModel.setjajY(location.getY());
-        cuboidModel.setjajZ(location.getZ());
-        cuboidModel.setjajPitch(location.getPitch());
-        cuboidModel.setjajYaw(location.getYaw());
+        cuboidModel.setJajX(location.getX());
+        cuboidModel.setJajY(location.getY());
+        cuboidModel.setJajZ(location.getZ());
+        cuboidModel.setJajPitch(location.getPitch());
+        cuboidModel.setJajYaw(location.getYaw());
         CuboidDTO cuboidDTO = new CuboidDTO();
         cuboidDTO.Update(cuboidModel);
         App.getInst().cuboidCache.remove("cuboids");
@@ -118,11 +118,11 @@ public class CuboidHelper {
     }
 
     public static boolean UpdateWarpLocation(CuboidModel cuboidModel, Location location){
-        cuboidModel.setwarpX(location.getX());
-        cuboidModel.setwarpY(location.getY());
-        cuboidModel.setwarpZ(location.getZ());
-        cuboidModel.setwarpPitch(location.getPitch());
-        cuboidModel.setwarpYaw(location.getYaw());
+        cuboidModel.setWarpX(location.getX());
+        cuboidModel.setWarpY(location.getY());
+        cuboidModel.setWarpZ(location.getZ());
+        cuboidModel.setWarpPitch(location.getPitch());
+        cuboidModel.setWarpYaw(location.getYaw());
         CuboidDTO cuboidDTO = new CuboidDTO();
         cuboidDTO.Update(cuboidModel);
         App.getInst().cuboidCache.remove("cuboids");
@@ -130,7 +130,7 @@ public class CuboidHelper {
     }
 
     public static boolean UpdateIsWarpPurchased(CuboidModel cuboidModel, boolean isWarpPurchased){
-        cuboidModel.setisWarpPurchased(isWarpPurchased);
+        cuboidModel.setWarpPurchased(isWarpPurchased);
         CuboidDTO cuboidDTO = new CuboidDTO();
         cuboidDTO.Update(cuboidModel);
         App.getInst().cuboidCache.remove("cuboids");

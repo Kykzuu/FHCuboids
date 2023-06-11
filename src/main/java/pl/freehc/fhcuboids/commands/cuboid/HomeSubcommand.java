@@ -59,7 +59,7 @@ public class HomeSubcommand {
             p.sendMessage(ColoredText("&6&lFree&b&lHC  &cJesteś w złym świecie!"));
             return true;
         }
-        Location homeLocation = new Location(p.getWorld(), cuboid.getjajX(), cuboid.getjajY(), cuboid.getjajZ(), cuboid.getjajYaw(), cuboid.getjajPitch());
+        Location homeLocation = new Location(p.getWorld(), cuboid.getJajX(), cuboid.getJajY(), cuboid.getJajZ(), cuboid.getJajYaw(), cuboid.getJajPitch());
         p.teleport(homeLocation);
         p.sendMessage(ColoredText("&6&lFree&b&lHC  &7Teleportuję..."));
         return true;

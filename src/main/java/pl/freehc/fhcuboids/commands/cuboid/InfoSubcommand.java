@@ -23,7 +23,7 @@ public class InfoSubcommand {
 
             CuboidModel cuboid = CuboidHelper.GetCuboid(p);
             sender.sendMessage(CuboidHelper.ColoredText("&6&lFree&b&lHC &8- &f&lINFORMACJE"));
-            sender.sendMessage(CuboidHelper.ColoredText("&7Lokalizacja: &rX: "+Math.round(cuboid.getjajX())+" Y: "+Math.round(cuboid.getjajZ()) + " Z: "+Math.round(cuboid.getjajZ())));
+            sender.sendMessage(CuboidHelper.ColoredText("&7Lokalizacja: &rX: "+Math.round(cuboid.getJajX())+" Y: "+Math.round(cuboid.getJajZ()) + " Z: "+Math.round(cuboid.getJajZ())));
             sender.sendMessage(CuboidHelper.ColoredText("&7Wielkość:&f "+cuboid.getSize()*2 + "x"+cuboid.getSize()*2));
             String friends = "";
             if(cuboid.getFriendsUUID().size() > 0){

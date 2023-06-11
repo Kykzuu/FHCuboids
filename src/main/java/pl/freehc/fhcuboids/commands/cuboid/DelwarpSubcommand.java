@@ -17,7 +17,7 @@ public class DelwarpSubcommand {
                 return true;
             }
             CuboidModel cuboid = GetCuboid(p);
-            if(!cuboid.getisWarpPurchased()){
+            if(!cuboid.isWarpPurchased()){
                 p.sendMessage(ColoredText("&6&lFree&b&lHC  &cNie posiadasz warpa!"));
                 return true;
             }
