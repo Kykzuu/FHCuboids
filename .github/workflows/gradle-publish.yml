@@ -36,3 +36,23 @@ jobs:
         with:
           name: shadowJar
           path: build/libs/*.jar
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: upload artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./build/libs/FHCuboids-all.jar
+          asset_name: FHCuboids.jar
+          asset_content_type: application/jar
