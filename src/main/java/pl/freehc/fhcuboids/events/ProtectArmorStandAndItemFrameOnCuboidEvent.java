@@ -16,8 +16,7 @@ public class ProtectArmorStandAndItemFrameOnCuboidEvent implements Listener {
         if(event.getEntity() instanceof ArmorStand
                 || event.getEntity() instanceof ItemFrame
                 || event.getEntity() instanceof GlowItemFrame){
-            if(event.getDamager() instanceof Player){
-                Player damager = (Player) event.getDamager();
+            if(event.getDamager() instanceof Player damager){
                 if(CuboidHelper.IsOnAnyCuboidArea(event.getEntity().getLocation())){
                     CuboidModel cuboid = CuboidHelper.GetCuboid(damager.getLocation());
                     if(CuboidHelper.HasPermissionToCuboid(cuboid, damager)) {
@@ -29,8 +28,7 @@ public class ProtectArmorStandAndItemFrameOnCuboidEvent implements Listener {
             }
 
             if(event.getDamager() instanceof Projectile){
-                if(((Projectile) event.getDamager()).getShooter() instanceof Player){
-                    Player damager = (Player)((Projectile) event.getDamager()).getShooter();
+                if(((Projectile) event.getDamager()).getShooter() instanceof Player damager){
                     if(CuboidHelper.IsOnAnyCuboidArea(event.getEntity().getLocation())){
                         CuboidModel cuboid = CuboidHelper.GetCuboid(damager.getLocation());
                         if(CuboidHelper.HasPermissionToCuboid(cuboid, damager)) {
@@ -62,7 +60,7 @@ public class ProtectArmorStandAndItemFrameOnCuboidEvent implements Listener {
 
     @EventHandler
     public void PlayerArmorStandManipulate(PlayerArmorStandManipulateEvent e) {
-        Player player = (Player) e.getPlayer();
+        Player player = e.getPlayer();
         if(CuboidHelper.IsOnAnyCuboidArea(e.getPlayer().getLocation())){
             CuboidModel cuboid = CuboidHelper.GetCuboid(player.getLocation());
             if(CuboidHelper.HasPermissionToCuboid(cuboid, player)) {

@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class CacheHelper<K, T> {
 
-    private long timeToLive;
-    private LRUMap crunchifyCacheMap;
+    private final long timeToLive;
+    private final LRUMap crunchifyCacheMap;
 
     protected class CacheObject {
         public long lastAccessed = System.currentTimeMillis();

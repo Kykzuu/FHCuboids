@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +22,7 @@ import java.util.List;
 
 public class CraftingSubcommand implements Listener {
 
-    private static Inventory inv = Bukkit.createInventory(null, 9, "§cKliknij aby poznać crafting");;
+    private static final Inventory inv = Bukkit.createInventory(null, 9, "§cKliknij aby poznać crafting");
 
 
     public static boolean CraftingSubcommandMain(CommandSender sender, Command cmd, String label, String[] args) {

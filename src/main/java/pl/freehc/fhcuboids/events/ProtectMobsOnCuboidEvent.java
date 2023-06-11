@@ -20,8 +20,7 @@ public class ProtectMobsOnCuboidEvent implements Listener {
         if (damageTaker instanceof Animals
         || damageTaker instanceof Villager) {
             if(CuboidHelper.IsOnAnyCuboidArea(damageTaker.getLocation())){
-                if(damager instanceof Player){
-                    Player damagerPlayer = (Player) damager;
+                if(damager instanceof Player damagerPlayer){
                     CuboidModel cuboid = CuboidHelper.GetCuboid(damagerPlayer.getLocation());
                     if(CuboidHelper.HasPermissionToCuboid(cuboid, damagerPlayer)) {
                         return;

@@ -1,7 +1,6 @@
 package pl.freehc.fhcuboids;
 
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.dynmap.DynmapAPI;
 import org.dynmap.markers.MarkerSet;
@@ -18,8 +17,8 @@ public class CuboidHelper {
             CuboidDTO cuboidDTO = new CuboidDTO();
             App.getInst().cuboidCache.put("cuboids", cuboidDTO.GetAll());
 
-            if(App.getInst().dynmapApi != null) {
-                DynmapAPI dynmap = App.getInst().dynmapApi;
+            if(App.dynmapApi != null) {
+                DynmapAPI dynmap = App.dynmapApi;
                 MarkerSet markerSet = dynmap.getMarkerAPI().getMarkerSet("Cuboids");
                 if(markerSet != null){
                     markerSet.deleteMarkerSet();

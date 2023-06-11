@@ -22,7 +22,7 @@ public class AddSubcommand {
             return true;
         }
 
-        Player friend = Bukkit.getServer().getPlayer(args[1].toString());
+        Player friend = Bukkit.getServer().getPlayer(args[1]);
 
         //Czy gracz jest online
         if(friend == null){

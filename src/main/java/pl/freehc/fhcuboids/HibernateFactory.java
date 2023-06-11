@@ -1,11 +1,10 @@
 package pl.freehc.fhcuboids;
 
-import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import com.zaxxer.hikari.hibernate.HikariConnectionProvider;
+
 public class HibernateFactory {
     private Configuration getHibernateConfig() {
         PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();

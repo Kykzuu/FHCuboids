@@ -1,13 +1,10 @@
 package pl.freehc.fhcuboids;
 
-import org.apache.commons.collections.list.SynchronizedList;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class PluginConfiguration {
     public static PluginConfigurationModel getPluginConfiguration() {

@@ -1,16 +1,14 @@
 package pl.freehc.fhcuboids.hooks;
 
-import org.bukkit.Bukkit;
 import org.dynmap.DynmapAPI;
 import org.dynmap.markers.AreaMarker;
 import org.dynmap.markers.MarkerSet;
 import pl.freehc.fhcuboids.App;
-import pl.freehc.fhcuboids.CuboidHelper;
 import pl.freehc.fhcuboids.CuboidModel;
 
 public class DynmapHook {
     public void RegisterCuboidMarker(CuboidModel cuboid) {
-        DynmapAPI dynmap = App.getInst().dynmapApi;
+        DynmapAPI dynmap = App.dynmapApi;
         MarkerSet markerSet = dynmap.getMarkerAPI().getMarkerSet("Cuboids");
         if(dynmap.getMarkerAPI().getMarkerSet("Cuboids") == null){
             markerSet = dynmap.getMarkerAPI().createMarkerSet("Cuboids", "Cuboid", dynmap.getMarkerAPI().getMarkerIcons(), false);

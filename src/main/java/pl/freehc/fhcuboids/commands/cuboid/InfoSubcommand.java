@@ -9,7 +9,6 @@ import pl.freehc.fhcuboids.CuboidModel;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class InfoSubcommand {
     public static boolean InfoSubcommandMain(CommandSender sender, Command cmd, String label, String[] args) {

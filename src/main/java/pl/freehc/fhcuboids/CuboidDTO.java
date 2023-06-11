@@ -3,13 +3,12 @@ package pl.freehc.fhcuboids;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
 public class CuboidDTO {
-    private static SessionFactory factory;
+    private static final SessionFactory factory;
     static {
         HibernateFactory hibernateFactory = new HibernateFactory();
         factory = hibernateFactory.getSessionFactory();

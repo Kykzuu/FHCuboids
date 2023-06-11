@@ -1,6 +1,5 @@
 package pl.freehc.fhcuboids.commands.cuboid;
 
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -8,7 +7,6 @@ import pl.freehc.fhcuboids.CuboidHelper;
 import pl.freehc.fhcuboids.CuboidModel;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class WarpsSubcommand {
