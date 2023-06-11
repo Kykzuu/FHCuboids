@@ -1,12 +1,24 @@
 # Cuboids
 #FREEHC.PL (C) 2023
 
+
 database:
-  host: localhost
-  port: 3306
-  user: root
-  password: password
-  database: minecraft
+  # Database type (MySQL, H2)
+    type: MySQL
+    MySQL:
+      # MySQL database host
+      host: localhost
+      # MySQL database port
+      port: 3306
+      # MySQL database name
+      database: fhcuboids
+      # MySQL database username
+      username: root
+      # MySQL database password
+      password: ""
+    H2:
+      # H2 database file name
+      file: database
 
 Debug: false
 

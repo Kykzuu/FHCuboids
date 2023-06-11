@@ -10,12 +10,17 @@ public class PluginConfiguration {
     public static PluginConfigurationModel getPluginConfiguration() {
         FileConfiguration config = App.fileConfiguration;
         PluginConfigurationModel pluginConfigurationModel = new PluginConfigurationModel();
-        pluginConfigurationModel.setDatabaseHost(config.getString("database.host"));
-        pluginConfigurationModel.setDatabasePort(config.getInt("database.port"));
-        pluginConfigurationModel.setDatabaseUser(config.getString("database.user"));
-        pluginConfigurationModel.setDatabasePassword(config.getString("database.password"));
-        pluginConfigurationModel.setDatabaseDatabase(config.getString("database.database"));
+
+        pluginConfigurationModel.setDatabaseType(config.getString("database.type"));
+
+        pluginConfigurationModel.setDatabaseMySQLHost(config.getString("database.MySQL.host"));
+        pluginConfigurationModel.setDatabaseMySQLPort(config.getInt("database.MySQL.port"));
+        pluginConfigurationModel.setDatabaseMySQLUser(config.getString("database.MySQL.username"));
+        pluginConfigurationModel.setDatabaseMySQLPassword(config.getString("database.MySQL.password"));
+        pluginConfigurationModel.setDatabaseMySQLDatabase(config.getString("database.MySQL.database"));
         pluginConfigurationModel.setIsDebug(config.getBoolean("Debug"));
+
+        pluginConfigurationModel.setDatabaseH2File(config.getString("database.H2.file"));
 
         List<CuboidConfigurationModel> cuboidsConfig = new ArrayList<>();
 

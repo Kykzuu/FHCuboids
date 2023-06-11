@@ -9,12 +9,22 @@ public class HibernateFactory {
     private Configuration getHibernateConfig() {
         PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
         Configuration configuration = new Configuration();
-        configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:mysql://"+pluginConfigurationModel.getDatabaseHost()+":"+pluginConfigurationModel.getDatabasePort()+"/"+pluginConfigurationModel.getDatabaseDatabase());
-        configuration.setProperty("hibernate.connection.username", pluginConfigurationModel.getDatabaseUser());
-        configuration.setProperty("hibernate.connection.password", pluginConfigurationModel.getDatabasePassword());
-        configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
-        configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+        if(pluginConfigurationModel.getDatabaseType().equalsIgnoreCase("MySQL")){
+            configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
+            configuration.setProperty("hibernate.connection.url", "jdbc:mysql://"+pluginConfigurationModel.getDatabaseMySQLHost()+":"+pluginConfigurationModel.getDatabaseMySQLPort()+"/"+pluginConfigurationModel.getDatabaseMySQLDatabase());
+            configuration.setProperty("hibernate.connection.username", pluginConfigurationModel.getDatabaseMySQLUser());
+            configuration.setProperty("hibernate.connection.password", pluginConfigurationModel.getDatabaseMySQLPassword());
+            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL55Dialect");
+            configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+        }
+        if(pluginConfigurationModel.getDatabaseType().equalsIgnoreCase("H2")){
+            configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
+            configuration.setProperty("hibernate.connection.url", "jdbc:h2:"+App.getInst().AbsolutePath+"/"+pluginConfigurationModel.getDatabaseH2File()+";DB_CLOSE_DELAY=-1");
+            configuration.setProperty("hibernate.connection.username", "sa");
+            configuration.setProperty("hibernate.connection.password", "");
+            configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
+            configuration.setProperty("hibernate.hbm2ddl.auto", "update");
+        }
         //configuration.setProperty("hibernate.connection.provider_class", "org.hibernate.hikaricp.internal.HikariCPConnectionProvider");
         //configuration.setProperty("hibernate.hikari.connectionTimeout", "20000");
         //configuration.setProperty("hibernate.hikari.minimumIdle", "10");

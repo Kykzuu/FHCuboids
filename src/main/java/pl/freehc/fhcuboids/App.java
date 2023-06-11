@@ -11,6 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
+import org.hibernate.SessionFactory;
 import pl.freehc.fhcuboids.commands.cuboid.CraftingSubcommand;
 import pl.freehc.fhcuboids.commands.cuboid.CuboidCommand;
 import pl.freehc.fhcuboids.events.*;
@@ -19,6 +20,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 
 public class App extends JavaPlugin {
     private static App instance;
@@ -26,6 +28,7 @@ public class App extends JavaPlugin {
     private String host, database, username, password;
     private int port;
     public Statement statement;
+    public String AbsolutePath = getDataFolder().getAbsolutePath();
     public CacheHelper<String, List<CuboidModel>> cuboidCache;
     public static Economy econ = null;
     public static FileConfiguration fileConfiguration;
@@ -96,6 +99,22 @@ public class App extends JavaPlugin {
         if (getServer().getPluginManager().getPlugin("dynmap") != null) {
             dynmapApi = (DynmapAPI) Bukkit.getServer().getPluginManager().getPlugin("dynmap");
         }
+
+        //fetch cuboids to cache
+        try{
+            CuboidHelper.GetAllCuboids();
+        }catch (Exception e){
+            Bukkit.getLogger().log(Level.SEVERE, "Error while fetching cuboids to cache", e);
+            //disable plugin
+            getServer().getPluginManager().disablePlugin(this);
+        }
+        Bukkit.getLogger().info("    ______    __  __   ______            __             _        __        ");
+        Bukkit.getLogger().info("   / ____/   / / / /  / ____/  __  __   / /_   ____    (_)  ____/ /   _____");
+        Bukkit.getLogger().info("  / /_      / /_/ /  / /      / / / /  / __ \\ / __ \\  / /  / __  /   / ___/");
+        Bukkit.getLogger().info(" / __/     / __  /  / /___   / /_/ /  / /_/ // /_/ / / /  / /_/ /   (__  ) ");
+        Bukkit.getLogger().info("/_/       /_/ /_/   \\____/   \\__,_/  /_.___/ \\____/ /_/   \\__,_/   /____/  ");
+        Bukkit.getLogger().info("                                                                           ");
+        Bukkit.getLogger().info("FHcuboids enabled!");
     }
 
     public static App getInst() {
