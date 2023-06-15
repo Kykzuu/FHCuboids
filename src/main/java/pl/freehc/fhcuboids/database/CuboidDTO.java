@@ -1,9 +1,10 @@
-package pl.freehc.fhcuboids;
+package pl.freehc.fhcuboids.database;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import pl.freehc.fhcuboids.App;
 
 import java.util.List;
 

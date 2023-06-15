@@ -4,7 +4,7 @@
 
 database:
   # Database type (MySQL, H2)
-    type: MySQL
+    type: H2
     MySQL:
       # MySQL database host
       host: localhost
@@ -22,7 +22,6 @@ database:
 
 Debug: false
 
-CuboidWorldName: world
 
 #Allowed commands on cuboid for non-added players
 AllowedCommandsOnCuboid: ["/home", "/spawn", "/warp", "/tpa", "/msg", "/r", "/reply", "/cuboid"]
@@ -31,56 +30,42 @@ CuboidLevels: [
   {
     size: 30, #The number must be even for the boundary to be drawn from the cuboid centre
     item: "SPONGE",
+    groups: ["default", "vip"],
+    worlds: ["world"],
+    pvp: true,
     price: 0,
     crafting: [ COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE, DIRT, COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE ]
   },
   {
     size: 60,
     item: "SPONGE",
+    groups: ["default", "vip"],
+    worlds: ["world"],
+    pvp: true,
     price: 12500,
     crafting: [COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE, IRON_BLOCK, COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE]
   },
   {
-    size: 80,
-    item: "SPONGE",
-    price: 37500,
-    crafting: [ COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE, GOLD_BLOCK, COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE ]
+    size: 20,
+    item: "NETHERITE_BLOCK",
+    groups: ["default", "vip"],
+    worlds: ["world_nether"],
+    pvp: true,
+    price: 12500,
+    crafting: [COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE, IRON_BLOCK, COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE]
+  }
+]
+
+CuboidGroups: [
+  {
+    name: "default", #Permission: FHCuboids.groups.default
+    priority: 0,
+    limit: 1
   },
   {
-    size: 100,
-    item: "SPONGE",
-    price: 75000,
-    crafting: [ COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE, DIAMOND_BLOCK, COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE ]
-  },
-  {
-    size: 120,
-    item: "SPONGE",
-    price: 125000,
-    crafting: [ COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE, NETHERITE_BLOCK, COBBLESTONE, COBBLESTONE, COBBLESTONE, COBBLESTONE ]
-  },
-  {
-    size: 140,
-    item: "SPONGE",
-    price: 187500,
-    crafting: [ IRON_BLOCK, IRON_BLOCK, IRON_BLOCK, IRON_BLOCK, NETHERITE_BLOCK, IRON_BLOCK, IRON_BLOCK, IRON_BLOCK, IRON_BLOCK ]
-  },
-  {
-    size: 160,
-    item: "SPONGE",
-    price: 262500,
-    crafting: [ GOLD_BLOCK, GOLD_BLOCK, GOLD_BLOCK, GOLD_BLOCK, NETHERITE_BLOCK, GOLD_BLOCK, GOLD_BLOCK, GOLD_BLOCK, GOLD_BLOCK ]
-  },
-  {
-    size: 180,
-    item: "SPONGE",
-    price: 350000,
-    crafting: [ DIAMOND_BLOCK, DIAMOND_BLOCK, DIAMOND_BLOCK, DIAMOND_BLOCK, NETHERITE_BLOCK, DIAMOND_BLOCK, DIAMOND_BLOCK, DIAMOND_BLOCK, DIAMOND_BLOCK ]
-  },
-  {
-    size: 200,
-    item: "SPONGE",
-    price: 450000,
-    crafting: [ NETHERITE_BLOCK, NETHERITE_BLOCK, NETHERITE_BLOCK, NETHERITE_BLOCK, ELYTRA, NETHERITE_BLOCK, NETHERITE_BLOCK, NETHERITE_BLOCK, NETHERITE_BLOCK ]
+    name: "vip",
+    priority: 1,
+    limit: 2
   }
 ]
 

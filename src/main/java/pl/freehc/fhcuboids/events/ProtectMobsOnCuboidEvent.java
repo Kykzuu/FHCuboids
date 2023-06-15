@@ -8,8 +8,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import pl.freehc.fhcuboids.CuboidHelper;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.services.CuboidService;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
 public class ProtectMobsOnCuboidEvent implements Listener {
 
@@ -19,10 +19,10 @@ public class ProtectMobsOnCuboidEvent implements Listener {
         Entity damageTaker = e.getEntity();
         if (damageTaker instanceof Animals
         || damageTaker instanceof Villager) {
-            if(CuboidHelper.IsOnAnyCuboidArea(damageTaker.getLocation())){
+            if(CuboidService.IsOnAnyCuboidArea(damageTaker.getLocation())){
                 if(damager instanceof Player damagerPlayer){
-                    CuboidModel cuboid = CuboidHelper.GetCuboid(damagerPlayer.getLocation());
-                    if(CuboidHelper.HasPermissionToCuboid(cuboid, damagerPlayer)) {
+                    CuboidModel cuboid = CuboidService.GetCuboid(damagerPlayer.getLocation());
+                    if(CuboidService.HasPermissionToCuboid(cuboid, damagerPlayer)) {
                         return;
                     }
                 }

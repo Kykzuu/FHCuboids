@@ -6,14 +6,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.util.StringUtil;
 import pl.freehc.fhcuboids.App;
-import pl.freehc.fhcuboids.CuboidHelper;
+import pl.freehc.fhcuboids.services.CuboidService;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static pl.freehc.fhcuboids.CuboidHelper.*;
+import static pl.freehc.fhcuboids.services.CuboidService.*;
 
 
 public class CuboidCommand {
@@ -108,7 +108,7 @@ public class CuboidCommand {
                 if(args[0].equalsIgnoreCase("reload")){
                     if (sender.hasPermission("FHCuboids.reload")) {
                         App.getInst().reloadConfig();
-                        sender.sendMessage(CuboidHelper.ColoredText("Poprawnie przeładowano."));
+                        sender.sendMessage(CuboidService.ColoredText("Poprawnie przeładowano."));
                     }
                     return true;
                 }

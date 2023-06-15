@@ -1,13 +1,17 @@
-package pl.freehc.fhcuboids;
+package pl.freehc.fhcuboids.database;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+import pl.freehc.fhcuboids.App;
+import pl.freehc.fhcuboids.configs.PluginConfiguration;
+import pl.freehc.fhcuboids.configs.PluginConfigurationModel;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
 public class HibernateFactory {
     private Configuration getHibernateConfig() {
-        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.Companion.getPluginConfiguration();
         Configuration configuration = new Configuration();
         if(pluginConfigurationModel.getDatabaseType().equalsIgnoreCase("MySQL")){
             configuration.setProperty("hibernate.connection.driver_class", "com.mysql.cj.jdbc.Driver");
@@ -19,7 +23,7 @@ public class HibernateFactory {
         }
         if(pluginConfigurationModel.getDatabaseType().equalsIgnoreCase("H2")){
             configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-            configuration.setProperty("hibernate.connection.url", "jdbc:h2:"+App.getInst().AbsolutePath+"/"+pluginConfigurationModel.getDatabaseH2File()+";DB_CLOSE_DELAY=-1");
+            configuration.setProperty("hibernate.connection.url", "jdbc:h2:"+ App.getInst().AbsolutePath+"/"+pluginConfigurationModel.getDatabaseH2File()+";DB_CLOSE_DELAY=-1");
             configuration.setProperty("hibernate.connection.username", "sa");
             configuration.setProperty("hibernate.connection.password", "");
             configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
@@ -31,7 +35,7 @@ public class HibernateFactory {
         //configuration.setProperty("hibernate.hikari.maximumPoolSize", "20");
         //configuration.setProperty("hibernate.hikari.idleTimeout", "300000");
 
-        if(pluginConfigurationModel.getIsDebug()){
+        if(pluginConfigurationModel.isDebug()){
             configuration.setProperty("hibernate.show_sql", "true");
             configuration.setProperty("hibernate.format_sql", "true");
             configuration.setProperty("hibernate.use_sql_comments", "true");

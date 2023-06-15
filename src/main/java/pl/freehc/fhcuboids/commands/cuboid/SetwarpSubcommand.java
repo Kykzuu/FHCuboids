@@ -7,34 +7,34 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import pl.freehc.fhcuboids.App;
-import pl.freehc.fhcuboids.CuboidHelper;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.services.CuboidService;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
-import static pl.freehc.fhcuboids.CuboidHelper.ColoredText;
+import static pl.freehc.fhcuboids.services.CuboidService.ColoredText;
 
 public class SetwarpSubcommand {
     public static boolean SetwarpSubcommandMain(CommandSender sender, Command cmd, String label, String[] args) {
         Player p = (Player) sender;
         //Czy ma cuboid
-        if (!CuboidHelper.IsPlayerHasCuboid(p)) {
-            p.sendMessage(CuboidHelper.ColoredText("&6&lFree&b&lHC &cNie posiadasz cuboida!"));
+        if (!CuboidService.IsPlayerHasCuboid(p)) {
+            p.sendMessage(CuboidService.ColoredText("&6&lFree&b&lHC &cNie posiadasz cuboida!"));
             return true;
         }
 
         //Czy jest na swoim cuboidzie
-        CuboidModel cuboid = CuboidHelper.GetCuboid(p.getLocation());
-        if(cuboid == null || !CuboidHelper.HasPermissionToCuboid(cuboid, p)){
-            p.sendMessage(CuboidHelper.ColoredText("&6&lFree&b&lHC &cMusisz być na terenie swojego cuboida!"));
+        CuboidModel cuboid = CuboidService.GetCuboid(p.getLocation());
+        if(cuboid == null || !CuboidService.HasPermissionToCuboid(cuboid, p)){
+            p.sendMessage(CuboidService.ColoredText("&6&lFree&b&lHC &cMusisz być na terenie swojego cuboida!"));
             return true;
         }
 
-        CuboidModel cuboidPlayer = CuboidHelper.GetCuboid(p);
+        CuboidModel cuboidPlayer = CuboidService.GetCuboid(p);
         boolean IsWarpPurchased = cuboidPlayer.isWarpPurchased();
 
         //czy ma kupionego warpa
         if(IsWarpPurchased){
-            CuboidHelper.UpdateWarpLocation(cuboidPlayer, p.getLocation());
-            p.sendMessage(CuboidHelper.ColoredText("&6&lFree&b&lHC &7Zmieniłeś lokalizacje warpa cuboida"));
+            CuboidService.UpdateWarpLocation(cuboidPlayer, p.getLocation());
+            p.sendMessage(CuboidService.ColoredText("&6&lFree&b&lHC &7Zmieniłeś lokalizacje warpa cuboida"));
             return true;
         }else{
             //nie ma kupionego warpa
@@ -48,10 +48,10 @@ public class SetwarpSubcommand {
                         return true;
                     }
                     //buy warp
-                    CuboidHelper.UpdateWarpLocation(cuboidPlayer, p.getLocation());
-                    CuboidHelper.UpdateIsWarpPurchased(cuboidPlayer, true);
+                    CuboidService.UpdateWarpLocation(cuboidPlayer, p.getLocation());
+                    CuboidService.UpdateIsWarpPurchased(cuboidPlayer, true);
                     economy.withdrawPlayer(offlinePlayer, 15000);
-                    p.sendMessage(CuboidHelper.ColoredText("&6&lFree&b&lHC &7Zakupiłeś i ustawiłeś swojego warpa!"));
+                    p.sendMessage(CuboidService.ColoredText("&6&lFree&b&lHC &7Zakupiłeś i ustawiłeś swojego warpa!"));
                     return true;
                 }
             }

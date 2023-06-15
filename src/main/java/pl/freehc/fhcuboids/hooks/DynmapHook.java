@@ -4,7 +4,7 @@ import org.dynmap.DynmapAPI;
 import org.dynmap.markers.AreaMarker;
 import org.dynmap.markers.MarkerSet;
 import pl.freehc.fhcuboids.App;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
 public class DynmapHook {
     public void RegisterCuboidMarker(CuboidModel cuboid) {

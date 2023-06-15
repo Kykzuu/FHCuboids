@@ -1,11 +1,11 @@
-package pl.freehc.fhcuboids;
+package pl.freehc.fhcuboids.services;
 
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.map.LRUMap;
 
 import java.util.ArrayList;
 
-public class CacheHelper<K, T> {
+public class CacheService<K, T> {
 
     private final long timeToLive;
     private final LRUMap crunchifyCacheMap;
@@ -19,7 +19,7 @@ public class CacheHelper<K, T> {
         }
     }
 
-    public CacheHelper(long TimeToLive, final long TimerInterval, int maxItems) {
+    public CacheService(long TimeToLive, final long TimerInterval, int maxItems) {
         this.timeToLive = TimeToLive * 1000;
 
         crunchifyCacheMap = new LRUMap(maxItems);

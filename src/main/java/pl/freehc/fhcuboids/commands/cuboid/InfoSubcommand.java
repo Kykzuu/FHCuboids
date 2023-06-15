@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.freehc.fhcuboids.CuboidHelper;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.services.CuboidService;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,15 +15,16 @@ public class InfoSubcommand {
         Player p = (Player) sender;
 
             //Czy ma cuboid
-            if (!CuboidHelper.IsPlayerHasCuboid(p)) {
-                p.sendMessage(CuboidHelper.ColoredText("&6&lFree&b&lHC &cNie posiadasz cuboida!"));
+            if (!CuboidService.IsPlayerHasCuboid(p)) {
+                p.sendMessage(CuboidService.ColoredText("&6&lFree&b&lHC &cNie posiadasz cuboida!"));
                 return true;
             }
 
-            CuboidModel cuboid = CuboidHelper.GetCuboid(p);
-            sender.sendMessage(CuboidHelper.ColoredText("&6&lFree&b&lHC &8- &f&lINFORMACJE"));
-            sender.sendMessage(CuboidHelper.ColoredText("&7Lokalizacja: &rX: "+Math.round(cuboid.getJajX())+" Y: "+Math.round(cuboid.getJajZ()) + " Z: "+Math.round(cuboid.getJajZ())));
-            sender.sendMessage(CuboidHelper.ColoredText("&7Wielkość:&f "+cuboid.getSize()*2 + "x"+cuboid.getSize()*2));
+            CuboidModel cuboid = CuboidService.GetCuboid(p);
+            sender.sendMessage(CuboidService.ColoredText("&6&lFree&b&lHC &8- &f&lINFORMACJE"));
+            sender.sendMessage(CuboidService.ColoredText("&7Nazwa: &f"+cuboid.getName()));
+            sender.sendMessage(CuboidService.ColoredText("&7Lokalizacja: &rX: "+Math.round(cuboid.getJajX())+" Y: "+Math.round(cuboid.getJajZ()) + " Z: "+Math.round(cuboid.getJajZ())));
+            sender.sendMessage(CuboidService.ColoredText("&7Wielkość:&f "+cuboid.getSize()*2 + "x"+cuboid.getSize()*2));
             String friends = "";
             if(cuboid.getFriendsUUID().size() > 0){
                 List<UUID> friendUUIDs = cuboid.getFriendsUUID();
@@ -34,7 +35,7 @@ public class InfoSubcommand {
             }else{
                 friends = "brak";
             }
-            sender.sendMessage(CuboidHelper.ColoredText("&7Dodani gracze:&f "+friends));
+            sender.sendMessage(CuboidService.ColoredText("&7Dodani gracze:&f "+friends));
             return true;
     }
 }

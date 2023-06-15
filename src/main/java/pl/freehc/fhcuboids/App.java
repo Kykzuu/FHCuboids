@@ -11,10 +11,15 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
-import org.hibernate.SessionFactory;
 import pl.freehc.fhcuboids.commands.cuboid.CraftingSubcommand;
 import pl.freehc.fhcuboids.commands.cuboid.CuboidCommand;
+import pl.freehc.fhcuboids.configs.CuboidConfigurationModel;
+import pl.freehc.fhcuboids.configs.PluginConfiguration;
+import pl.freehc.fhcuboids.configs.PluginConfigurationModel;
+import pl.freehc.fhcuboids.database.CuboidModel;
 import pl.freehc.fhcuboids.events.*;
+import pl.freehc.fhcuboids.services.CacheService;
+import pl.freehc.fhcuboids.services.CuboidService;
 
 import java.sql.Connection;
 import java.sql.Statement;
@@ -24,12 +29,8 @@ import java.util.logging.Level;
 
 public class App extends JavaPlugin {
     private static App instance;
-    private Connection connection;
-    private String host, database, username, password;
-    private int port;
-    public Statement statement;
     public String AbsolutePath = getDataFolder().getAbsolutePath();
-    public CacheHelper<String, List<CuboidModel>> cuboidCache;
+    public CacheService<String, List<CuboidModel>> cuboidCache;
     public static Economy econ = null;
     public static FileConfiguration fileConfiguration;
     public static DynmapAPI dynmapApi = null;
@@ -74,10 +75,10 @@ public class App extends JavaPlugin {
 
 
         //initialize cache
-        cuboidCache = new CacheHelper<String, List<CuboidModel>>(5, 10, 1);
+        cuboidCache = new CacheService<String, List<CuboidModel>>(5, 10, 1);
 
         //register recipes
-        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.Companion.getPluginConfiguration();
         int i = 0;
         for(CuboidConfigurationModel cuboidConfigurationModel : pluginConfigurationModel.getCuboidsConfig()){
             NamespacedKey recipeNamespace = new NamespacedKey(this, "FHcuboidlvl"+i);
@@ -102,7 +103,7 @@ public class App extends JavaPlugin {
 
         //fetch cuboids to cache
         try{
-            CuboidHelper.GetAllCuboids();
+            CuboidService.GetAllCuboids();
         }catch (Exception e){
             Bukkit.getLogger().log(Level.SEVERE, "Error while fetching cuboids to cache", e);
             //disable plugin

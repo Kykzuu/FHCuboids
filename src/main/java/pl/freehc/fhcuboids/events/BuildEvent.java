@@ -6,8 +6,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import pl.freehc.fhcuboids.CuboidHelper;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.services.CuboidService;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -26,7 +26,7 @@ public class BuildEvent implements Listener {
         if (!placedBlockLocation.getWorld().getName().equalsIgnoreCase("world")){
             return;
         }
-        List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+        List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
 
         for (CuboidModel cuboid : cuboids) {
             if (placedBlockLocation.getX() >= cuboid.getMiX() && placedBlockLocation.getX() <= cuboid.getMaX() && placedBlockLocation.getZ() >= cuboid.getMiZ() && placedBlockLocation.getZ() <= cuboid.getMaZ()) {

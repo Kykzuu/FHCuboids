@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import pl.freehc.fhcuboids.CuboidHelper;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.services.CuboidService;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -20,7 +20,7 @@ public class MoveEvent implements Listener {
             Player player = e.getPlayer();
             Location locationTo = e.getTo();
             Location locationFrom = e.getFrom();
-            List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+            List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
 
             for (CuboidModel cuboid : cuboids) {
                 if ((locationFrom.getX() < cuboid.getMiX() || locationFrom.getX() > cuboid.getMaX() || locationFrom.getZ() < cuboid.getMiZ() || locationFrom.getZ() > cuboid.getMaZ()) &&

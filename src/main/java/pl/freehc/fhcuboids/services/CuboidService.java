@@ -1,16 +1,19 @@
-package pl.freehc.fhcuboids;
+package pl.freehc.fhcuboids.services;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.dynmap.DynmapAPI;
 import org.dynmap.markers.MarkerSet;
+import pl.freehc.fhcuboids.App;
+import pl.freehc.fhcuboids.database.CuboidDTO;
+import pl.freehc.fhcuboids.database.CuboidModel;
 import pl.freehc.fhcuboids.hooks.DynmapHook;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class CuboidHelper {
+public class CuboidService {
 
     public static List<CuboidModel> GetAllCuboids() {
         if(App.getInst().cuboidCache.size() != 1) {
@@ -35,7 +38,7 @@ public class CuboidHelper {
     }
 
     public static boolean IsPlayerHasCuboid(Player player) {
-        List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+        List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
         return cuboids
                 .stream()
                 .anyMatch(c -> c.getOwnerUUID().equals(player.getUniqueId()));
@@ -84,7 +87,7 @@ public class CuboidHelper {
 
 
     public static CuboidModel GetCuboid(Player player) {
-        List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+        List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
         return cuboids
                 .stream()
                 .filter(x -> x.getOwnerUUID().equals(player.getUniqueId()))
@@ -93,7 +96,7 @@ public class CuboidHelper {
     }
 
     public static CuboidModel GetCuboid(Location location) {
-        List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+        List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
         return cuboids
                 .stream()
                 .filter(x -> location.getX() >= x.getMiX())
@@ -136,9 +139,17 @@ public class CuboidHelper {
         return true;
     }
 
+    public static boolean UpdateCuboidName(CuboidModel cuboidModel, String name){
+        cuboidModel.setName(name);
+        CuboidDTO cuboidDTO = new CuboidDTO();
+        cuboidDTO.Update(cuboidModel);
+        App.getInst().cuboidCache.remove("cuboids");
+        return true;
+    }
+
     public static boolean IsOnAnyCuboidArea(Location location){
 
-        List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+        List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
         return cuboids
                 .stream()
                 .anyMatch(x -> location.getX() >= x.getMiX() && location.getX() <= x.getMaX()
@@ -154,7 +165,7 @@ public class CuboidHelper {
     }
 
     public static List<CuboidModel> GetCuboidsWherePlayerIsAdded(Player player) {
-        List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+        List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
         return cuboids
                 .stream()
                 .filter(x ->

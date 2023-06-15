@@ -4,9 +4,9 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
-import static pl.freehc.fhcuboids.CuboidHelper.*;
+import static pl.freehc.fhcuboids.services.CuboidService.*;
 
 public class HomeSubcommand {
 

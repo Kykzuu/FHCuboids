@@ -4,12 +4,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.freehc.fhcuboids.CuboidHelper;
-import pl.freehc.fhcuboids.CuboidModel;
+import pl.freehc.fhcuboids.services.CuboidService;
+import pl.freehc.fhcuboids.database.CuboidModel;
 
 import java.util.UUID;
 
-import static pl.freehc.fhcuboids.CuboidHelper.*;
+import static pl.freehc.fhcuboids.services.CuboidService.*;
 
 public class KickSubcommand {
     public static boolean KickSubcommandMain(CommandSender sender, Command cmd, String label, String[] args) {
@@ -36,10 +36,10 @@ public class KickSubcommand {
 
         //Usun gracza jesli jest offline
         if(friend == null){
-            for(UUID FriendCuboidUUID : CuboidHelper.GetCuboid(p).getFriendsUUID()){
+            for(UUID FriendCuboidUUID : CuboidService.GetCuboid(p).getFriendsUUID()){
                 if(Bukkit.getOfflinePlayer(FriendCuboidUUID).hasPlayedBefore()){
                     if(Bukkit.getOfflinePlayer(FriendCuboidUUID).getName().equalsIgnoreCase(args[1])){
-                        CuboidHelper.DeletePlayerFromCuboidByUUID(CuboidHelper.GetCuboid(p), FriendCuboidUUID);
+                        CuboidService.DeletePlayerFromCuboidByUUID(CuboidService.GetCuboid(p), FriendCuboidUUID);
                         p.sendMessage(ColoredText("&6&lFree&b&lHC &7Usunięto gracza &a"+ Bukkit.getOfflinePlayer(FriendCuboidUUID).getName() + " &7z Twojego cuboida"));
                         return true;
                     }
@@ -50,9 +50,9 @@ public class KickSubcommand {
         }
 
         //Usun gracza jezeli jest online
-        for(CuboidModel cuboid : CuboidHelper.GetAllCuboids()){
+        for(CuboidModel cuboid : CuboidService.GetAllCuboids()){
             if(cuboid.getOwnerUUID().equals(p.getUniqueId())){
-                DeletePlayerFromCuboid(CuboidHelper.GetCuboid(p), friend);
+                DeletePlayerFromCuboid(CuboidService.GetCuboid(p), friend);
                 p.sendMessage(ColoredText("&6&lFree&b&lHC &7Usunięto gracza &a" + friend.getName() + "&7 z Twojego cuboida"));
                 friend.sendMessage(ColoredText("&6&lFree&b&lHC &7Zostałeś usunięty z cuboida gracza&a "+p.getName()));
                 return true;

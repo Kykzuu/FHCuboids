@@ -5,7 +5,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static pl.freehc.fhcuboids.CuboidHelper.*;
+import static pl.freehc.fhcuboids.services.CuboidService.*;
 
 public class AddSubcommand {
     public static boolean AddSubcommandMain(CommandSender sender, Command cmd, String label, String[] args) {

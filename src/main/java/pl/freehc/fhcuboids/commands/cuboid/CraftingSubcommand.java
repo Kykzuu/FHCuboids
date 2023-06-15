@@ -14,9 +14,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import pl.freehc.fhcuboids.App;
-import pl.freehc.fhcuboids.CuboidConfigurationModel;
-import pl.freehc.fhcuboids.PluginConfiguration;
-import pl.freehc.fhcuboids.PluginConfigurationModel;
+import pl.freehc.fhcuboids.configs.CuboidConfigurationModel;
+import pl.freehc.fhcuboids.configs.PluginConfiguration;
+import pl.freehc.fhcuboids.configs.PluginConfigurationModel;
 
 import java.util.List;
 
@@ -32,7 +32,7 @@ public class CraftingSubcommand implements Listener {
     }
 
     public static void initializeItems() {
-        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.Companion.getPluginConfiguration();
         for(CuboidConfigurationModel cuboidConfigurationModel : pluginConfigurationModel.getCuboidsConfig()){
             ItemStack cuboidItem = App.CuboidItem(cuboidConfigurationModel.getSize(), cuboidConfigurationModel.getPrice(), Material.getMaterial(cuboidConfigurationModel.getItem()));
             inv.addItem(createGuiItem(cuboidItem.getType(), cuboidItem.getItemMeta().getDisplayName(), cuboidItem.getItemMeta().getLore()));
@@ -74,7 +74,7 @@ public class CraftingSubcommand implements Listener {
 
         // Using slots click is a best option for your inventory click's
 
-        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.Companion.getPluginConfiguration();
         List<CuboidConfigurationModel> cuboidConfig = pluginConfigurationModel.getCuboidsConfig();
 
         for (int i = 0; i < cuboidConfig.size(); i++) {

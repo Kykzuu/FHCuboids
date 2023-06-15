@@ -1,4 +1,4 @@
-package pl.freehc.fhcuboids
+package pl.freehc.fhcuboids.database
 
 import org.hibernate.annotations.Type
 import java.util.*
@@ -35,6 +35,8 @@ data class CuboidModel(
         var expireTime: Long = 0,
         var createdTime: Long = 0,
         var size: Int = 0,
+
+        var name: String? = null,
 
         @Column(columnDefinition = "double precision default '0'")
         var pricePaid: Double = 0.0,

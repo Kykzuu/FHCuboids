@@ -10,23 +10,29 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import pl.freehc.fhcuboids.*;
+import pl.freehc.fhcuboids.configs.CuboidConfigurationModel;
+import pl.freehc.fhcuboids.configs.PluginConfiguration;
+import pl.freehc.fhcuboids.configs.PluginConfigurationModel;
+import pl.freehc.fhcuboids.database.CuboidModel;
+import pl.freehc.fhcuboids.services.CuboidService;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
-import static pl.freehc.fhcuboids.CuboidHelper.*;
+import static pl.freehc.fhcuboids.services.CuboidService.*;
 
 public class PlaceEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) throws SQLException {
-        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.getPluginConfiguration();
+        PluginConfigurationModel pluginConfigurationModel = PluginConfiguration.Companion.getPluginConfiguration();
         for (CuboidConfigurationModel cuboidConfigurationModel : pluginConfigurationModel.getCuboidsConfig()) {
             createCuboidOnPlace(e, cuboidConfigurationModel.getSize(), cuboidConfigurationModel.getPrice(), Material.getMaterial(cuboidConfigurationModel.getItem()));
         }
     }
 
-    public void createCuboidOnPlace(BlockPlaceEvent e, int size, double price, Material item) throws SQLException {
+    public void createCuboidOnPlace(BlockPlaceEvent e, int size, double price, Material item){
         if (e.getPlayer().getItemInHand().getType().equals(App.CuboidItem(size, price, item).getType())) {
             if (!e.getPlayer().getItemInHand().getItemMeta().equals(App.CuboidItem(size, price, item).getItemMeta()))
                 return;
@@ -36,7 +42,7 @@ public class PlaceEvent implements Listener {
                 return;
             }
             int cuboidSize = size;
-            List<CuboidModel> cuboids = CuboidHelper.GetAllCuboids();
+            List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
 
             for (CuboidModel cuboid : cuboids) {
                 if(e.getPlayer().getUniqueId().equals(cuboid.getOwnerUUID())){
@@ -105,7 +111,9 @@ public class PlaceEvent implements Listener {
             cuboid.setExpireTime((System.currentTimeMillis()+(7*86400000))/1000);
             cuboid.setPricePaid(price);
             economy.withdrawPlayer(offlinePlayer, price);
+
             CreateCuboid(cuboid);
+            cuboid.setName("cuboid" + new Random().nextInt(9) + cuboid.getID() + new Random().nextInt(9));
             Bukkit.getServer().getWorld("world").getBlockAt(placedBlockLocation).setType(Material.AIR);
             e.getPlayer().sendMessage(ColoredText("&6&lFree&b&lHC &7Zabezpieczyłeś teren &a" + (cuboidSize * 2) + "x&a" + (cuboidSize * 2) + "&7!"));
         }
