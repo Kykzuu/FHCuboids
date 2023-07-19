@@ -86,16 +86,25 @@ public class CuboidService {
     }
 
 
-    public static CuboidModel GetCuboid(Player player) {
+    public static List<CuboidModel> getCuboids(Player player) {
         List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
         return cuboids
                 .stream()
                 .filter(x -> x.getOwnerUUID().equals(player.getUniqueId()))
+                .collect(Collectors.toList());
+    }
+
+    public static CuboidModel getCuboids(Player player, String name) {
+        List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
+        return cuboids
+                .stream()
+                .filter(x -> x.getOwnerUUID().equals(player.getUniqueId()))
+                .filter(x -> x.getName().equalsIgnoreCase(name))
                 .findFirst()
                 .orElse(null);
     }
 
-    public static CuboidModel GetCuboid(Location location) {
+    public static CuboidModel getCuboids(Location location) {
         List<CuboidModel> cuboids = CuboidService.GetAllCuboids();
         return cuboids
                 .stream()
@@ -107,32 +116,14 @@ public class CuboidService {
                 .orElse(null);
     }
 
+
+
     public static boolean UpdateHomeLocation(CuboidModel cuboidModel, Location location){
         cuboidModel.setJajX(location.getX());
         cuboidModel.setJajY(location.getY());
         cuboidModel.setJajZ(location.getZ());
         cuboidModel.setJajPitch(location.getPitch());
         cuboidModel.setJajYaw(location.getYaw());
-        CuboidDTO cuboidDTO = new CuboidDTO();
-        cuboidDTO.Update(cuboidModel);
-        App.getInst().cuboidCache.remove("cuboids");
-        return true;
-    }
-
-    public static boolean UpdateWarpLocation(CuboidModel cuboidModel, Location location){
-        cuboidModel.setWarpX(location.getX());
-        cuboidModel.setWarpY(location.getY());
-        cuboidModel.setWarpZ(location.getZ());
-        cuboidModel.setWarpPitch(location.getPitch());
-        cuboidModel.setWarpYaw(location.getYaw());
-        CuboidDTO cuboidDTO = new CuboidDTO();
-        cuboidDTO.Update(cuboidModel);
-        App.getInst().cuboidCache.remove("cuboids");
-        return true;
-    }
-
-    public static boolean UpdateIsWarpPurchased(CuboidModel cuboidModel, boolean isWarpPurchased){
-        cuboidModel.setWarpPurchased(isWarpPurchased);
         CuboidDTO cuboidDTO = new CuboidDTO();
         cuboidDTO.Update(cuboidModel);
         App.getInst().cuboidCache.remove("cuboids");

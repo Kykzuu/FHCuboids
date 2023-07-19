@@ -35,11 +35,11 @@ jobs:
             ${{ runner.os }}-gradle-
             
       - name: Build with Gradle
-        run: ./gradlew shadowJar --no-daemon
+        run: ./gradlew release --no-daemon
 
       - name: Publish Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: shadowJar
+          name: output
           path: build/libs/*.jar
 

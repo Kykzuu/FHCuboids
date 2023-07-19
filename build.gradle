@@ -1,13 +1,33 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        google()
+    }
+    dependencies {
+        classpath 'com.guardsquare:proguard-gradle:7.3.0-beta2'
+    }
+}
+
 plugins {
     id 'java'
     id 'org.jetbrains.kotlin.jvm' version '1.6.0'
     id 'com.github.johnrengelman.shadow' version '7.1.0'
     id "org.jetbrains.kotlin.plugin.allopen" version "1.8.22"
 }
-compileJava.options.encoding = 'UTF-8'
 
+//variables
+def version = "3.0.0"
+
+
+compileJava.options.encoding = 'UTF-8'
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+tasks {
+    processResources {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
 }
 
 repositories {
@@ -15,10 +35,10 @@ repositories {
     maven { url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.mikeprimm.com/' }
+    maven { url = 'https://redempt.dev' }
 }
 
 dependencies {
-    compileOnly 'org.dynmap:dynmap-api:2.0'
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.hibernate:hibernate-core:5.6.3.Final'
     implementation 'javax.persistence:javax.persistence-api:2.2'
@@ -26,11 +46,13 @@ dependencies {
     implementation 'com.github.stefvanschie.inventoryframework:IF:0.10.0'
     implementation 'commons-collections:commons-collections:3.2.2'
     implementation 'com.h2database:h2:1.4.200'
-    compileOnly 'org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT'
+    implementation 'com.github.Redempt:RedLib:6.5.8'
 
     compileOnly('com.github.MilkBowl:VaultAPI:1.7') {
         exclude group: 'org.bukkit', module: 'bukkit'
     }
+    compileOnly 'org.dynmap:dynmap-api:2.0'
+    compileOnly 'org.spigotmc:spigot-api:1.19.1-R0.1-SNAPSHOT'
 
     // Kotlin dependencies
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
@@ -51,25 +73,32 @@ java {
 sourceSets {
     main {
         resources {
-            srcDirs 'src/main/resources'
-            includes = ['plugin.yml', 'config.yml']
+            srcDirs 'src/main/resources', 'src/main/java/pl/freehc/fhcuboids/commands'
+            includes = ['plugin.yml', 'config.yml', '*.rdcml']
         }
     }
-}
-tasks.processResources {
-    duplicatesStrategy = 'exclude'
 }
 shadowJar {
     manifest {
         attributes 'Main-Class': 'pl.freehc.fhcuboids.App'
     }
-
     mergeServiceFiles()
+    archiveFileName = "FHCuboids-shadowed.jar"
 }
 
-task printVersion {
-    doLast {
-        println "3.0.0"
+def getGitHash = { ->
+    def stdout = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'rev-parse', '--short', 'HEAD'
+        standardOutput = stdout
     }
+    return stdout.toString().trim()
 }
 
+task ('release', type: proguard.gradle.ProGuardTask) {
+    dependsOn("shadowJar")
+    configuration 'proguard.pro'
+    verbose
+    injars  'build/libs/FHCuboids-shadowed.jar'
+    outjars "build/libs/FHCuboids-${version}-SNAPSHOT-${getGitHash}.jar"
+}
